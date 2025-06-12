@@ -1,161 +1,99 @@
-<h1>Summer Analytics First Hackathon</h1>
+<h1>🌿 Summer Analytics 2025: First Hackathon</h1>
 
 <p>
-  Welcome to First course hackathon of Summer Analytics 2025.
-Hosted by Consulting & Analytics Club and GeeksforGeeks (GFG)
-Classify land cover types using NDVI time-series data from satellite imagery and OpenStreetMap (OSM) labels. Your challenge is to build a Logistic Regression model that accurately predicts land cover classes despite noisy NDVI signals. Top performers win GFG Premium memberships, and all participants get exclusive discounts!
+  Welcome to the <strong>first course hackathon</strong> of <strong>Summer Analytics 2025</strong>,
+  hosted by the <strong>Consulting & Analytics Club</strong> in collaboration with <strong>GeeksforGeeks (GFG)</strong>.
 </p>
 
 <p>
-  <a href="https://www.youtube.com/watch?v=4BOtr1PZ2D8">Reference for Participating in Hackathons</a>
+  Your challenge is to classify land cover types using <strong>NDVI time-series satellite data</strong> and <strong>OpenStreetMap (OSM)</strong> labels.
+  Build a <strong>Logistic Regression</strong> model that accurately predicts land cover classes even with noisy data.
 </p>
 
-<h3>Description</h3>
+<p>
+  🏆 <strong>Top performers</strong> win <strong>GFG Premium memberships</strong>, and all participants receive exclusive discounts.
+</p>
+
+<p>
+  📺 <a href="https://www.youtube.com/watch?v=4BOtr1PZ2D8" target="_blank">Reference Video: How to Participate in Hackathons</a>
+</p>
+
+<hr/>
+
+<h2>📝 Problem Statement: NDVI-based Land Cover Classification</h2>
+
+<h3>📌 Key Concepts</h3>
+
+<p><strong>NDVI (Normalized Difference Vegetation Index):</strong></p>
 
 <pre>
-Hackathon Problem Statement: NDVI-based Land Cover Classification
-Key Concepts
-
-NDVI (Normalized Difference Vegetation Index)
-Measures vegetation health using satellite data:
-Where:-
-
-NIR = Near-Infrared reflectance
-Red = Red reflectance
-2. Data Challenges
-Noise: The main challenge with the dataset is that both the imagery and the crowdsourced data contain noise (due to cloud cover in the images and inaccurate labeling/digitizing of polygons).
-
-Missing Data: Certain NDVI values are missing because of cloud cover obstructing the satellite view.
-
-Temporal Variations: NDVI values vary seasonally, requiring careful feature engineering to extract meaningful trends.
-
-Important Note:
-The training and public leaderboard test data may contain noisy observations, while the private leaderboard data is clean and free of noise. This design helps evaluate how well your model generalizes beyond noisy training conditions.
-
-<h3>Dataset</h3>
-Each row in the dataset contains:
-
-class: Ground truth label of the land cover type — one of {Water, Impervious, Farm, Forest, Grass, Orchard}
-
-ID:Unique identifier for the sample
-
-27 NDVI Time Points: Columns labeled in the format YYYYMMDD_N (e.g., 20150720_N, 20150602_N) represent NDVI values collected on different dates. These values form a time series representing vegetation dynamics for each location.
-
-<h3>Rules</h3>
-  
-Model: Logistic Regression only (multiclass).
-
-Preprocessing: Denoising, imputation, and feature engineering allowed.
-
-Leaderboard:
-
-Public (89% test data): Immediate feedback.
-
-Private (11% test data): Final ranking (avoids overfitting).
-
-<h3>Evaluation</h3>
-Submissions will be evaluated on basis of accuracy score of the predicted class.
-
-Submission format:
-ID,class
-1,water
-2,water
-3,grass
-4,impervious
-..
+NDVI = (NIR - Red) / (NIR + Red)
+Where:
+  NIR = Near-Infrared Reflectance
+  Red = Red Reflectance
 </pre>
+
+<h3>⚠️ Data Challenges</h3>
+
+<ul>
+  <li><strong>Noise:</strong> Cloud cover and labeling inaccuracies.</li>
+  <li><strong>Missing Data:</strong> Due to satellite obstruction (clouds).</li>
+  <li><strong>Temporal Variation:</strong> Requires feature engineering for seasonal patterns.</li>
+</ul>
+
+<p><strong>Note:</strong> Training and public test data are noisy. Private leaderboard data is clean to evaluate generalization.</p>
+
+<hr/>
+
+<h2>📂 Dataset</h2>
+
+<ul>
+  <li><strong>ID:</strong> Unique sample identifier</li>
+  <li><strong>class:</strong> Ground truth — one of:
+    <code>{Water, Impervious, Farm, Forest, Grass, Orchard}</code>
+  </li>
+  <li><strong>27 NDVI Time Points:</strong> Columns like <code>20150720_N</code>, <code>20150602_N</code>, etc., representing NDVI values over time</li>
+</ul>
+
+<hr/>
+
+<h2>📜 Rules</h2>
+
+<ul>
+  <li><strong>Model:</strong> Logistic Regression only (multiclass)</li>
+  <li><strong>Preprocessing:</strong> Denoising, imputation, and feature engineering allowed</li>
+  <li><strong>Leaderboard:</strong>
+    <ul>
+      <li><strong>Public (89%):</strong> Immediate feedback</li>
+      <li><strong>Private (11%):</strong> Used for final evaluation</li>
+    </ul>
+  </li>
+</ul>
+
+<hr/>
+
+<h2>🧮 Evaluation</h2>
+
+<p><strong>Metric:</strong> Accuracy score</p>
+<p><strong>Submission Format:</strong></p>
+
 <pre>
-  <h1>Leaderboard</h1>
-  Model-2 (Public Score:0.78546) had the best public score followed by Model-5 then by Model-3 of which submissions are SubmissionModel{2&5}
-</pre>
-📝 Problem Statement: NDVI-based Land Cover Classification
-📌 Key Concepts
-NDVI (Normalized Difference Vegetation Index):
-
-𝑁
-𝐷
-𝑉
-𝐼
-=
-(
-𝑁
-𝐼
-𝑅
-−
-𝑅
-𝑒
-𝑑
-)
-(
-𝑁
-𝐼
-𝑅
-+
-𝑅
-𝑒
-𝑑
-)
-NDVI= 
-(NIR+Red)
-(NIR−Red)
-​
- 
-NIR = Near-Infrared Reflectance
-
-Red = Red Reflectance
-
-⚠️ Data Challenges
-Noise: Due to cloud cover and imperfect labeling.
-
-Missing Data: Caused by satellite obstruction (clouds).
-
-Temporal Variation: NDVI values vary seasonally. You must apply feature engineering to capture meaningful trends.
-
-🔍 Note:
-Training and public test data contain noise. Private leaderboard data is clean. This setup evaluates your model’s generalization ability.
-
-📂 Dataset
-Each row in the dataset contains:
-
-ID: Unique identifier for each sample.
-
-class: Ground truth label — one of:
-Water, Impervious, Farm, Forest, Grass, Orchard
-
-27 NDVI Time Points:
-Columns like 20150720_N, 20150602_N representing NDVI values collected over time.
-
-📜 Rules
-✅ Model: Only Logistic Regression (Multiclass) allowed.
-
-✅ Allowed Preprocessing: Denoising, Imputation, Feature Engineering.
-
-🧮 Leaderboard Structure:
-
-Public Leaderboard (89%): Real-time feedback on submissions.
-
-Private Leaderboard (11%): Used for final ranking to avoid overfitting.
-
-🧮 Evaluation
-Metric: Accuracy Score
-
-Submission Format (CSV):
-
-python-repl
-Copy
-Edit
 ID,class
 1,water
 2,water
 3,grass
 4,impervious
 ...
-🏅 Leaderboard Highlights
-🥇 Model-2: Public Score 0.78546 (Best)
+</pre>
 
-🥈 Model-5: Second Best
+<hr/>
 
-🥉 Model-3: Third Best
+<h2>🏅 Leaderboard Highlights</h2>
 
-📁 Top Submissions:
-SubmissionModel2.csv, SubmissionModel5.csv
+<ul>
+  <li><strong>Model-2:</strong> Public Score <code>0.78546</code> ✅ Best</li>
+  <li><strong>Model-5:</strong> Runner-up</li>
+  <li><strong>Model-3:</strong> Third place</li>
+</ul>
+
+<p><strong>Submissions:</strong> <code>SubmissionModel2.csv</code>, <code>SubmissionModel5.csv</code></p>
