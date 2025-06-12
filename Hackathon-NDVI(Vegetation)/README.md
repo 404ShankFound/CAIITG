@@ -66,5 +66,96 @@ ID,class
 </pre>
 <pre>
   <h1>Leaderboard</h1>
-  Model-2 (Public Score:0.78546) had the best public score followed by Model-5 of which submissions are SubmissionModel{2&5}
+  Model-2 (Public Score:0.78546) had the best public score followed by Model-5 then by Model-3 of which submissions are SubmissionModel{2&5}
 </pre>
+📝 Problem Statement: NDVI-based Land Cover Classification
+📌 Key Concepts
+NDVI (Normalized Difference Vegetation Index):
+
+𝑁
+𝐷
+𝑉
+𝐼
+=
+(
+𝑁
+𝐼
+𝑅
+−
+𝑅
+𝑒
+𝑑
+)
+(
+𝑁
+𝐼
+𝑅
++
+𝑅
+𝑒
+𝑑
+)
+NDVI= 
+(NIR+Red)
+(NIR−Red)
+​
+ 
+NIR = Near-Infrared Reflectance
+
+Red = Red Reflectance
+
+⚠️ Data Challenges
+Noise: Due to cloud cover and imperfect labeling.
+
+Missing Data: Caused by satellite obstruction (clouds).
+
+Temporal Variation: NDVI values vary seasonally. You must apply feature engineering to capture meaningful trends.
+
+🔍 Note:
+Training and public test data contain noise. Private leaderboard data is clean. This setup evaluates your model’s generalization ability.
+
+📂 Dataset
+Each row in the dataset contains:
+
+ID: Unique identifier for each sample.
+
+class: Ground truth label — one of:
+Water, Impervious, Farm, Forest, Grass, Orchard
+
+27 NDVI Time Points:
+Columns like 20150720_N, 20150602_N representing NDVI values collected over time.
+
+📜 Rules
+✅ Model: Only Logistic Regression (Multiclass) allowed.
+
+✅ Allowed Preprocessing: Denoising, Imputation, Feature Engineering.
+
+🧮 Leaderboard Structure:
+
+Public Leaderboard (89%): Real-time feedback on submissions.
+
+Private Leaderboard (11%): Used for final ranking to avoid overfitting.
+
+🧮 Evaluation
+Metric: Accuracy Score
+
+Submission Format (CSV):
+
+python-repl
+Copy
+Edit
+ID,class
+1,water
+2,water
+3,grass
+4,impervious
+...
+🏅 Leaderboard Highlights
+🥇 Model-2: Public Score 0.78546 (Best)
+
+🥈 Model-5: Second Best
+
+🥉 Model-3: Third Best
+
+📁 Top Submissions:
+SubmissionModel2.csv, SubmissionModel5.csv
