@@ -92,7 +92,7 @@ ID,class
 
 <ul>
   <li><strong>Model-2:</strong> Public Score <code>0.78546</code> ✅ Best</li>
-  <li><strong>Model-5:</strong> Runner-up</li>
+  <li><strong>Model-5:</strong> Runner-up (Highest Private Score)</li>
   <li><strong>Model-3:</strong> Third place</li>
 </ul>
 
