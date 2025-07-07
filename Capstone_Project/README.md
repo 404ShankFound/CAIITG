@@ -67,9 +67,8 @@ Hosted by: Consulting & Analytics Club × Pathway</p>
 <h2>Project Files</h2>
 <pre><code>.
 ├── dataset.csv                      # Input dataset
-├── Dynamic_Pricing_Notebook.ipynb  # Final notebook
-├── Parking_Pricing_Report.pdf      # Detailed report
-├── Narrative_Readme.md             # This README file</code></pre>
+├── Note1book.ipynb                  # Final notebook
+├── README.md             # This README file</code></pre>
 
 <hr>
 
