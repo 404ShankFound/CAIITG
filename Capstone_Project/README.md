@@ -86,7 +86,11 @@ Hosted by: Consulting & Analytics Club × Pathway</p>
 <hr>
 
 <h2>Author</h2>
-<p>[Your Name] – Submitted as part of Summer Analytics 2025</p>
+<pre>
+Name - Shashank Nandan
+Mail used to register for summer analytics - shashanknandan21@gmail.com
+Manipal Institute Of Technology
+</pre>
 
 <hr>
 
