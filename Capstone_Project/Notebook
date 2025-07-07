@@ -1,0 +1,105 @@
+from google.colab import files
+!pip install pandas numpy bokeh pathway --quiet
+
+import pandas as pd
+import numpy as np
+import pathway as pw
+from bokeh.io import output_notebook
+from bokeh.plotting import figure, show
+from bokeh.models import ColumnDataSource
+from pathway.internals.dtype import DATE_TIME_NAIVE
+
+output_notebook()
+uploaded = files.upload()
+df = pd.read_csv("dataset.csv")
+df.columns = df.columns.str.strip()
+df['timestamp'] = pd.to_datetime(df['LastUpdatedDate'] + ' ' + df['LastUpdatedTime'], dayfirst=True, errors='coerce')
+df = df.dropna(subset=['timestamp'])
+df['parking_lot_id'] = df['ID']
+df['capacity'] = df['Capacity']
+df['latitude'] = df['Latitude']
+df['longitude'] = df['Longitude']
+df['occupancy'] = df['Occupancy']
+df['queue_length'] = df['QueueLength']
+df['traffic_congestion'] = df['TrafficConditionNearby']
+df['is_special_day'] = df['IsSpecialDay']
+df['vehicle_type'] = df['VehicleType']
+vehicle_weights = {'car': 1.0, 'bike': 0.5, 'truck': 1.5}
+df['vehicle_weight'] = df['vehicle_type'].str.lower().map(vehicle_weights).fillna(1.0)
+df = df[[
+    'timestamp', 'parking_lot_id', 'latitude', 'longitude', 'capacity',
+    'occupancy', 'queue_length', 'traffic_congestion', 'is_special_day',
+    'vehicle_type', 'vehicle_weight'
+]]
+
+BASE_PRICE = 10
+W_OCC = 0.4
+W_QUEUE = 0.3
+W_TRAFFIC = 0.2
+W_SPECIAL = 0.3
+W_VEHICLE = 0.2
+LAMBDA = 0.5
+
+def demand_function(occupancy, capacity, queue_length, traffic_congestion, is_special_day, vehicle_weight):
+    return (
+        W_OCC * (occupancy / capacity) +
+        W_QUEUE * queue_length -
+        W_TRAFFIC * traffic_congestion +
+        W_SPECIAL * is_special_day +
+        W_VEHICLE * vehicle_weight
+    )
+
+def pricing_logic(timestamp, parking_lot_id, latitude, longitude, capacity,
+                  occupancy, queue_length, traffic_congestion, is_special_day,
+                  vehicle_type, vehicle_weight):
+    demand = demand_function(occupancy, capacity, queue_length, traffic_congestion, is_special_day, vehicle_weight)
+    price = BASE_PRICE * (1 + LAMBDA * demand)
+    return max(BASE_PRICE * 0.5, min(BASE_PRICE * 2, price))
+
+class InputSchema(pw.Schema):
+    timestamp: DATE_TIME_NAIVE
+    parking_lot_id: int
+    latitude: float
+    longitude: float
+    capacity: int
+    occupancy: int
+    queue_length: int
+    traffic_congestion: float
+    is_special_day: int
+    vehicle_type: str
+    vehicle_weight: float
+
+input_table = pw.debug.table_from_pandas(df, schema=InputSchema)
+
+output_table = input_table.select(
+    input_table.timestamp,
+    input_table.parking_lot_id,
+    price=pw.apply(
+        pricing_logic,
+        input_table.timestamp,
+        input_table.parking_lot_id,
+        input_table.latitude,
+        input_table.longitude,
+        input_table.capacity,
+        input_table.occupancy,
+        input_table.queue_length,
+        input_table.traffic_congestion,
+        input_table.is_special_day,
+        input_table.vehicle_type,
+        input_table.vehicle_weight
+    )
+)
+
+latest = output_table.as_pandas()
+latest = latest.sort_values(by='timestamp')
+
+source = ColumnDataSource(data=dict(
+    time=latest['timestamp'],
+    price=latest['price']
+))
+
+plot = figure(title="Dynamic Parking Price Over Time", x_axis_type='datetime', width=800, height=300)
+plot.line(x='time', y='price', source=source, line_width=2, color='navy')
+plot.xaxis.axis_label = "Time"
+plot.yaxis.axis_label = "Price ($)"
+show(plot)
